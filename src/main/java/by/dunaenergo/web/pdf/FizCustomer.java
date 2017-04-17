@@ -1,7 +1,6 @@
 package by.dunaenergo.web.pdf;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class FizCustomer {
 	private long id;
@@ -16,8 +15,11 @@ public class FizCustomer {
 	private String passportDate;
 	private String passportRovd;
 	private String passportPrivateNumber;
+	private String dogovorNumber;
+	private String dogovorName;
+	private Item item;
+	private Date dogovorDate;
 	private String comment;
-	private List<Dogovor> listDogs = new ArrayList<Dogovor>();
 
 	public FizCustomer() {
 
@@ -27,60 +29,16 @@ public class FizCustomer {
 		return id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public String getPassportSn() {
-		return passportSn;
-	}
-
-	public String getPassportNumber() {
-		return passportNumber;
-	}
-
-	public String getPassportDate() {
-		return passportDate;
-	}
-
-	public String getPassportRovd() {
-		return passportRovd;
-	}
-
-	public String getPassportPrivateNumber() {
-		return passportPrivateNumber;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public List<Dogovor> getListDogs() {
-		return listDogs;
-	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getName() {
+		return name;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getShortName() {
@@ -91,10 +49,6 @@ public class FizCustomer {
 		this.shortName = shortName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getCity() {
 		return city;
 	}
@@ -103,36 +57,108 @@ public class FizCustomer {
 		this.city = city;
 	}
 
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getPassportSn() {
+		return passportSn;
 	}
 
 	public void setPassportSn(String passportSn) {
 		this.passportSn = passportSn;
 	}
 
+	public String getPassportNumber() {
+		return passportNumber;
+	}
+
 	public void setPassportNumber(String passportNumber) {
 		this.passportNumber = passportNumber;
+	}
+
+	public String getPassportDate() {
+		return passportDate;
 	}
 
 	public void setPassportDate(String passportDate) {
 		this.passportDate = passportDate;
 	}
 
+	public String getPassportRovd() {
+		return passportRovd;
+	}
+
 	public void setPassportRovd(String passportRovd) {
 		this.passportRovd = passportRovd;
+	}
+
+	public String getPassportPrivateNumber() {
+		return passportPrivateNumber;
 	}
 
 	public void setPassportPrivateNumber(String passportPrivateNumber) {
 		this.passportPrivateNumber = passportPrivateNumber;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public String getDogovorNumber() {
+		return dogovorNumber;
 	}
 
-	public void setListDogs(List<Dogovor> listDogs) {
-		this.listDogs = listDogs;
+	public void setDogovorNumber(String dogovorNumber) {
+		this.dogovorNumber = dogovorNumber;
+	}
+
+	public String getDogovorName() {
+		return dogovorName;
+	}
+
+	public Date getDogovorDate() {
+		return dogovorDate;
+	}
+
+	public void setDogovorDate(Date dogovorDate) {
+		this.dogovorDate = dogovorDate;
+	}
+
+	public void setDogovorName(String dogovorName) {
+		this.dogovorName = dogovorName;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

@@ -68,7 +68,7 @@
 						<label class="col-sm-4 control-label">Населенный пункт
 							(адрес регистрации)</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control input-sm" name="gorod"
+							<input type="text" class="form-control input-sm" name="city"
 								placeholder="Минский р-н, н.п.Боровляны" />
 						</div>
 					</div>

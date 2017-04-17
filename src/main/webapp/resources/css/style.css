@@ -1676,7 +1676,14 @@ padding-top: 3px;
   }
 
 }
+.modal-header {
+	background: #a51451;
 
+}
+
+.modal-title {
+	color: #fff;
+}
 @media (max-width: 480px) {
 	.bottom-article a.pull-right {
 		float:left;
