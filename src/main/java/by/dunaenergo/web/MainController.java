@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.dunaenergo.web.pdf.Customer;
+import by.dunaenergo.web.pdf.FizCustomer;
 
 /**
  * Handles requests for the application home page.
@@ -23,7 +23,7 @@ public class MainController {
 	public ModelAndView viewMainPage() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index");
-		mav.addObject("customer", new Customer());
+		mav.addObject("customer", new FizCustomer());
 		mav.addObject("mainStyle", "active");
 		mav.addObject("contactStyle", "");
 		return mav;
@@ -33,11 +33,11 @@ public class MainController {
 	 * Handle request to download a PDF document
 	 */
 
-	@RequestMapping(value = "/dogovor", method = RequestMethod.POST)
-	public ModelAndView dogovorPdf(@ModelAttribute("customer") Customer customer) {
+	@RequestMapping(value = "/dogovor", method = RequestMethod.GET)
+	public ModelAndView dogovorPdf() {
 		ModelAndView mav = new ModelAndView();
 		String path = servletContext.getRealPath("/");
-		mav.addObject("customer", customer);
+		mav.addObject("customer", new FizCustomer());
 		mav.addObject("path", path);
 		mav.setViewName("dogovorView");
 		return mav;
@@ -45,7 +45,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/invoice", method = RequestMethod.POST)
-	public ModelAndView invoicePdf(@ModelAttribute("customer") Customer customer) {
+	public ModelAndView invoicePdf(@ModelAttribute("customer") FizCustomer customer) {
 		ModelAndView mav = new ModelAndView();
 		String path = servletContext.getRealPath("/");
 		mav.addObject("customer", customer);

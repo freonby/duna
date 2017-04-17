@@ -36,7 +36,7 @@ public class InvoicePDFBuilder extends AbstractITextPdfView {
 	protected void buildPdfDocument(Map<String, Object> model, Document doc, PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// get data model which is passed by the Spring container
 		// receive item count
-		Customer offer = (Customer) model.get("customer");
+		FizCustomer offer = (FizCustomer) model.get("customer");
 
 		Object object = (Object) model.get("item");
 		Item item = null;
@@ -59,7 +59,7 @@ public class InvoicePDFBuilder extends AbstractITextPdfView {
 		// rfg.getWeight() + " кг)", "шт", rfg.doublePrice(), count);
 		// }
 		// Customer customer = (Customer) model.get("cust");
-		Customer customer = new Customer();
+		FizCustomer customer = new FizCustomer();
 		headText = "Внимание!Товар отпускается по факту прихода денег на р/c Поставщика, при наличии доверенности и паспорта. В доверенности должны быть указаны УНП и ОКПО Плательщика.";
 		// set fonts
 		arial = BaseFont.createFont("arial.ttf", "cp1251", BaseFont.EMBEDDED);
@@ -187,22 +187,16 @@ public class InvoicePDFBuilder extends AbstractITextPdfView {
 		return invoiceTable;
 	}
 
-	public Document addCustomer(Document doc, Customer customer, Font font) {
-		Paragraph customerTitle = new Paragraph("ПЛАТЕЛЬЩИК: " + customer.getCompanyName() + "\n", vendorTitleFont);
-		Paragraph cAddress = new Paragraph("Юр.адрес: " + customer.getAddress(), font);
+	public Document addCustomer(Document doc, FizCustomer customer, Font font) {
+		Paragraph customerTitle = new Paragraph("ПЛАТЕЛЬЩИК: " + customer.getName() + "\n", vendorTitleFont);
+		Paragraph cAddress = new Paragraph("Юр.адрес: " + customer.getCity(), font);
 		Paragraph cPhone = new Paragraph("Тел.: " + customer.getPhone(), font);
-		Paragraph cUnp = new Paragraph("УНП " + customer.getUnp(), font);
-		Paragraph cBank = new Paragraph("Банк: " + customer.getBankName() + " " + customer.getBankAdress(), font);
-		Paragraph cBankAccount = new Paragraph("Р/c: " + customer.getBankAccount(), font);
-		Paragraph cBankCode = new Paragraph("Код банка: " + customer.getBankCode(), font);
+
 		try {
 			doc.add(customerTitle);
 			doc.add(cAddress);
 			doc.add(cPhone);
-			doc.add(cUnp);
-			doc.add(cBank);
-			doc.add(cBankAccount);
-			doc.add(cBankCode);
+
 		} catch (DocumentException e) {
 
 			e.printStackTrace();

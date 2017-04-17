@@ -34,7 +34,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 	protected void buildPdfDocument(Map<String, Object> model, Document doc, PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// get data model which is passed by the Spring container
 		// receive item count
-		Customer offer = (Customer) model.get("customer");
+		FizCustomer offer = (FizCustomer) model.get("customer");
 
 		String path = (String) model.get("path");
 		Image logo = Image.getInstance(path + "/resources/img/logo/logo.png");
@@ -121,14 +121,14 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		return cell;
 	}
 
-	public Document addOffer(Document doc, Customer cust, Font font) {
-		Paragraph customerTitle = new Paragraph("КОМУ: " + cust.getCompanyName() + "\n", vendorTitleFont);
-		Paragraph cAddress = new Paragraph("Конт.лицо: " + cust.getContactPerson(), font);
+	public Document addOffer(Document doc, FizCustomer cust, Font font) {
+		Paragraph customerTitle = new Paragraph("КОМУ: " + cust.getName() + "\n", vendorTitleFont);
+
 		Paragraph cPhone = new Paragraph("Тел.: " + cust.getPhone(), font);
 		Paragraph cUnp = new Paragraph("email: " + cust.getEmail(), font);
 		try {
 			doc.add(customerTitle);
-			doc.add(cAddress);
+
 			doc.add(cPhone);
 			doc.add(cUnp);
 
