@@ -281,23 +281,23 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 						+ customer.getPassportNumber() + ", выдан " + customer.getPassportDate() + " " + customer.getPassportRovd() + "; личный номер: " + customer.getPassportPrivateNumber(),
 				textFont);
 		p8_1.setAlignment(txtAlign);
-		p8_1.setFirstLineIndent(ind);
+
 		doc.add(p8_1);
 		Paragraph footerDogTitle1 = new Paragraph("ИСПОЛНИТЕЛЬ:", titleFont);
 		footerDogTitle1.setAlignment(Element.ALIGN_LEFT);
 		doc.add(footerDogTitle1);
 		Paragraph p8_2 = new Paragraph("ООО «ДЮНАэнерго» 220029, г. Минск, пр. Машерова, 17, к.725", textFont);
 		p8_2.setAlignment(txtAlign);
-		p8_2.setFirstLineIndent(ind);
+
 		Paragraph p8_3 = new Paragraph("тел./факс +375 (17) 286 34 08 , +375 (29) 753 82 83, e-mail: na_an@tut.by, сайт: www.dunaenergo.by", textFont);
 		p8_3.setAlignment(txtAlign);
-		p8_3.setFirstLineIndent(ind);
+
 		Paragraph p8_4 = new Paragraph("УНП 192485462 ОКПО 382368345000 р/с 3012037816018", textFont);
 		p8_4.setAlignment(txtAlign);
-		p8_4.setFirstLineIndent(ind);
+
 		Paragraph p8_5 = new Paragraph("в ЦБУ 111 ОАО «Приорбанк», код 153001749 Адрес банка: 220123, г. Минск, пр. Машерова, 40", textFont);
 		p8_5.setAlignment(txtAlign);
-		p8_5.setFirstLineIndent(ind);
+
 		doc.add(p8_2);
 		doc.add(p8_3);
 		doc.add(p8_4);
@@ -339,6 +339,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		footerTable.addCell(cell3);
 		footerTable.addCell(cell4);
 		doc.add(footerTable);
+		doc.newPage();
 
 	}
 
