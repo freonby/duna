@@ -40,6 +40,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		float ind = 20f;
 		int txtAlign = Element.ALIGN_JUSTIFIED;
 		int titleAlign = Element.ALIGN_CENTER;
+		String date = DateParser.convertDateTo(customer.getDogovorDate());
 		arial = BaseFont.createFont("arial.ttf", "cp1251", BaseFont.EMBEDDED);
 		arialbd = BaseFont.createFont("arialbd.ttf", "cp1251", BaseFont.EMBEDDED);
 		titleFont = new Font(arial, 12);
@@ -50,7 +51,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 
 		// set header
 		Paragraph title = new Paragraph("ДОГОВОР №" + customer.getDogovorNumber(), titleFont);
-		Paragraph dogDate = new Paragraph("г.Минск   " + DateParser.convertDateTo(customer.getDogovorDate()), vendorTitleFont);
+		Paragraph dogDate = new Paragraph("г.Минск   " + date, vendorTitleFont);
 		title.setAlignment(Element.ALIGN_LEFT);
 		title.setSpacingAfter(5);
 		PdfPTable headerTable = new PdfPTable(2);
@@ -267,6 +268,65 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		Paragraph adressDogTitle = new Paragraph("8. Юридические адреса и реквизиты сторон", vendorTitleFont);
 		adressDogTitle.setAlignment(titleAlign);
 		doc.add(adressDogTitle);
+		Paragraph footerDogTitle = new Paragraph("ЗАКАЗЧИК:", titleFont);
+		footerDogTitle.setAlignment(titleAlign);
+		doc.add(footerDogTitle);
+		Paragraph p8_1 = new Paragraph(
+				"Гр. Ананьева Лариса Иосифовна, зарегистрированная по адресу: Минский р-н, н.п. Боровляны, ул. Детская, 1; паспорт: серия МС 2861894, выдан 25.08.2016 Минским РУВД Минской обл.; личный номер: 4020565В063РВ2",
+				textFont);
+		p8_1.setAlignment(txtAlign);
+		p8_1.setFirstLineIndent(ind);
+		doc.add(p8_1);
+		Paragraph footerDogTitle1 = new Paragraph("ИСПОЛНИТЕЛЬ:", titleFont);
+		footerDogTitle1.setAlignment(titleAlign);
+		doc.add(footerDogTitle1);
+		Paragraph p8_2 = new Paragraph("ООО «ДЮНАэнерго» 220029, г. Минск, пр. Машерова, 17, к.725", textFont);
+		p8_2.setAlignment(txtAlign);
+		p8_2.setFirstLineIndent(ind);
+		Paragraph p8_3 = new Paragraph("тел./факс +375 (17) 286 34 08 , +375 (29) 753 82 83, e-mail: na_an@tut.by, сайт: www.dunaenergo.by", textFont);
+		p8_3.setAlignment(txtAlign);
+		p8_3.setFirstLineIndent(ind);
+		Paragraph p8_4 = new Paragraph("УНП 192485462 ОКПО 382368345000 р/с 3012037816018", textFont);
+		p8_4.setAlignment(txtAlign);
+		p8_4.setFirstLineIndent(ind);
+		Paragraph p8_5 = new Paragraph("в ЦБУ 111 ОАО «Приорбанк», код 153001749 Адрес банка: 220123, г. Минск, пр. Машерова, 40", textFont);
+		p8_5.setAlignment(txtAlign);
+		p8_5.setFirstLineIndent(ind);
+		doc.add(p8_2);
+		doc.add(p8_3);
+		doc.add(p8_4);
+		doc.add(p8_5);
+
+		PdfPTable footerTable = new PdfPTable(2);
+		footerTable.setWidthPercentage(100);
+		footerTable.setSpacingAfter(5);
+		footerTable.setSpacingBefore(2);
+		PdfPCell cell3 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, headFont, tableColor);
+		PdfPCell cell4 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, headFont, tableColor);
+		cell3.setPaddingBottom(20f);
+		cell3.setBorderWidth(4f);
+		cell4.setPaddingBottom(10f);
+		cell4.setBorderWidth(4f);
+		cell3.setPadding(8);
+		cell3.addElement(footerDogTitle);
+		Paragraph p8_6 = new Paragraph("_____________________  Л.И.Ананьева", textFont);
+		p8_6.setSpacingBefore(40);
+		Paragraph p8_7 = new Paragraph(date, textFont);
+		cell3.addElement(p8_6);
+		cell3.addElement(p8_7);
+		cell4.addElement(footerDogTitle1);
+		Paragraph p8_8 = new Paragraph("Директор ООО «ДЮНАэнерго»", textFont);
+		Paragraph p8_9 = new Paragraph("_____________________  А.И.Сульжиц", textFont);
+		p8_9.setSpacingBefore(40);
+		Paragraph p8_10 = new Paragraph(date, textFont);
+		Paragraph p8_11 = new Paragraph("М.П.", textFont);
+		cell4.addElement(p8_8);
+		cell4.addElement(p8_9);
+		cell4.addElement(p8_10);
+		cell4.addElement(p8_11);
+		footerTable.addCell(cell3);
+		footerTable.addCell(cell4);
+		doc.add(footerTable);
 
 	}
 
