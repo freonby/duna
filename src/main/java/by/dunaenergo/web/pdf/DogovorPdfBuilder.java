@@ -32,6 +32,9 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		// get data model which is passed by the Spring container
 		// receive item count
 		FizCustomer customer = (FizCustomer) model.get("customer");
+		String objectStreet = (String) model.get("objectStreet");
+		String objectCity = (String) model.get("objectCity");
+		String typeObject = (String) model.get("typeObject");
 		String path = (String) model.get("path");
 		Image logo = Image.getInstance(path + "/resources/img/logo/logo.png");
 		logo.setWidthPercentage(30f);
@@ -75,7 +78,10 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		doc.add(headerTable);
 
 		Paragraph headParagraph = new Paragraph(
-				"Гр. Ананьева Лариса Иосифовна, именуемая в дальнейшем «Заказчик», зарегистрированная по адресу: Минский р-н, н.п. Боровляны, ул. Детская, 1; паспорт: серия МС 2861894, выдан 25.08.2016 Минским РУВД Минской обл.; личный номер: 4020565В063РВ2, с одной стороны, и Общество с ограниченной ответственностью «ДЮНАэнерго» (ООО «ДЮНАэнерго»), именуемое в дальнейшем «Исполнитель», в лице директора Сульжица А.И., действующего на основании Устава, с другой стороны, вместе именуемые «Стороны», заключили настоящий договор о нижеследующем:",
+				"Гр." + customer.getName() + ", именуемый(ая) в дальнейшем «Заказчик», зарегистрированный(ая) по адресу: " + customer.getCity() + ", " + customer.getStreet() + "; паспорт: "
+						+ customer.getPassportSn() + " " + customer.getPassportNumber() + ", выдан " + customer.getPassportDate() + " " + customer.getPassportRovd() + "; личный номер: "
+						+ customer.getPassportPrivateNumber()
+						+ ", с одной стороны, и Общество с ограниченной ответственностью «ДЮНАэнерго» (ООО «ДЮНАэнерго»), именуемое в дальнейшем «Исполнитель», в лице директора Сульжица А.И., действующего на основании Устава, с другой стороны, вместе именуемые «Стороны», заключили настоящий договор о нижеследующем:",
 				textFont);
 		headParagraph.setAlignment(txtAlign);
 		headParagraph.setFirstLineIndent(ind);
@@ -85,17 +91,16 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		predmetDogTitle.setAlignment(titleAlign);
 		doc.add(predmetDogTitle);
 
-		Paragraph p1_1 = new Paragraph(
-				"1.1. Исполнитель обязуется по заданию Заказчика выполнить работу по разработке проектной документации по объекту «Устройство трехфазного ввода в жилой дом Ананьевой Л.И., н.п. Боровляны, ул. Фрунзенская д.15А» и согласовать с заинтересованными, а Заказчик обязуется своевременно принять и оплатить результат выполненных работ.",
-				textFont);
+		Paragraph p1_1 = new Paragraph("1.1. Исполнитель обязуется по заданию Заказчика выполнить работу по разработке проектной документации по объекту «" + typeObject + " " + customer.getShortName()
+				+ ", " + objectCity + ", " + objectStreet + "» и согласовать с заинтересованными, а Заказчик обязуется своевременно принять и оплатить результат выполненных работ.", textFont);
 		p1_1.setAlignment(txtAlign);
 		p1_1.setFirstLineIndent(ind);
 		doc.add(p1_1);
-		Paragraph p1_2 = new Paragraph("1.2. Срок выполнения работ – январь 2017 г", textFont);
+		Paragraph p1_2 = new Paragraph("1.2. Срок выполнения работ – 25 календарных дней", textFont);
 		p1_2.setAlignment(txtAlign);
 		p1_2.setFirstLineIndent(ind);
 		doc.add(p1_2);
-		Paragraph p1_3 = new Paragraph("1.3. Местонахождение объекта – Минский р-н, н.п. Боровляны, ул. Фрунзенская, д.15А.", textFont);
+		Paragraph p1_3 = new Paragraph("1.3. Местонахождение объекта – " + objectCity + ", " + objectStreet, textFont);
 		p1_3.setAlignment(txtAlign);
 		p1_3.setFirstLineIndent(ind);
 		doc.add(p1_3);
@@ -272,7 +277,8 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		footerDogTitle.setAlignment(Element.ALIGN_LEFT);
 		doc.add(footerDogTitle);
 		Paragraph p8_1 = new Paragraph(
-				"Гр. Ананьева Лариса Иосифовна, зарегистрированная по адресу: Минский р-н, н.п. Боровляны, ул. Детская, 1; паспорт: серия МС 2861894, выдан 25.08.2016 Минским РУВД Минской обл.; личный номер: 4020565В063РВ2",
+				"Гр." + customer.getName() + ", зарегистрированный(ая) по адресу: " + customer.getCity() + ", " + customer.getStreet() + "; паспорт: " + customer.getPassportSn() + " "
+						+ customer.getPassportNumber() + ", выдан " + customer.getPassportDate() + " " + customer.getPassportRovd() + "; личный номер: " + customer.getPassportPrivateNumber(),
 				textFont);
 		p8_1.setAlignment(txtAlign);
 		p8_1.setFirstLineIndent(ind);
@@ -300,34 +306,36 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		PdfPTable footerTable = new PdfPTable(2);
 		footerTable.setWidthPercentage(100);
 		footerTable.setSpacingAfter(5);
-		footerTable.setSpacingBefore(2);
+		footerTable.setSpacingBefore(15);
 		PdfPCell cell3 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
 		PdfPCell cell4 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
 		cell3.setPaddingBottom(20f);
 		cell3.setBorderWidth(4f);
-		cell4.setPaddingBottom(10f);
+		cell4.setPaddingBottom(20f);
 		cell4.setBorderWidth(4f);
-		cell3.setPadding(8);
+
 		cell3.addElement(footerDogTitle);
-		Paragraph p8_12 = new Paragraph("Гр. Ананьева Лариса Иосифовна»", textFont);
-		Paragraph p8_6 = new Paragraph("_____________________  Л.И.Ананьева", textFont);
+		Paragraph p8_12 = new Paragraph("Гр." + customer.getName(), textFont);
+		Paragraph p8_6 = new Paragraph("_____________________  " + customer.getShortName(), textFont);
 		p8_6.setSpacingBefore(40);
 		Paragraph p8_7 = new Paragraph(date, textFont);
 		p8_7.setSpacingBefore(10);
+
 		cell3.addElement(p8_12);
 		cell3.addElement(p8_6);
 		cell3.addElement(p8_7);
+
 		cell4.addElement(footerDogTitle1);
 		Paragraph p8_8 = new Paragraph("Директор ООО «ДЮНАэнерго»", textFont);
 		Paragraph p8_9 = new Paragraph("_____________________  А.И.Сульжиц", textFont);
 		p8_9.setSpacingBefore(40);
-		Paragraph p8_10 = new Paragraph(date, textFont);
+		Paragraph p8_10 = new Paragraph(date + "        м.п.", textFont);
 		p8_10.setSpacingBefore(10);
-		Paragraph p8_11 = new Paragraph("М.П.", textFont);
+
 		cell4.addElement(p8_8);
 		cell4.addElement(p8_9);
 		cell4.addElement(p8_10);
-		cell4.addElement(p8_11);
+
 		footerTable.addCell(cell3);
 		footerTable.addCell(cell4);
 		doc.add(footerTable);

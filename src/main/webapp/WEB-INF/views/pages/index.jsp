@@ -11,8 +11,7 @@
 				<div class="btn-group">
 					<button type="button" class="lineBtn" data-toggle="modal"
 						data-target="#dogovor">Договор</button>
-					<button type="button" class="lineBtn" data-toggle="modal"
-						data-target="#invoice">Счет</button>
+					
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6  just"></div>
@@ -54,14 +53,14 @@
 						<label class="col-sm-4 control-label">Полное ФИО</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm" name="name"
-								placeholder="Иванов Иван Иванович" />
+								placeholder="Иванов Иван Иванович" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Краткое ФИО</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm" name="shortName"
-								placeholder="И.И.Иванов" />
+								placeholder="И.И.Иванов" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -69,7 +68,7 @@
 							(адрес регистрации)</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm" name="city"
-								placeholder="Минский р-н, н.п.Боровляны" />
+								placeholder="Минский р-н, н.п.Боровляны" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -77,7 +76,7 @@
 							регистрации)</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm" name="street"
-								placeholder="ул. Ленинская, 18а" />
+								placeholder="ул. Ленинская, 18а" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -98,7 +97,7 @@
 						<label class="col-sm-4 control-label">Серия паспорта</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="passportSn" placeholder="МР" />
+								name="passportSn" placeholder="МР" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -106,35 +105,35 @@
 							(возле серии)</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="passportNumber" placeholder="8888888" />
+								name="passportNumber" placeholder="8888888" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Дата выдачи паспорта</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="passportDate" placeholder="25.08.2016" />
+								name="passportDate" placeholder="25.08.2016" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Кем выдан</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="passportRovd" placeholder="Минским РУВД Минской обл." />
+								name="passportRovd" placeholder="Минским РУВД Минской обл." required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Личный номер</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="passportPrivateNumber" placeholder="4021565В073РВ2" />
+								name="passportPrivateNumber" placeholder="4021565В073РВ2" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Номер договора</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="dogovorNumber" placeholder="ПР-XX/XX" />
+								name="dogovorNumber" placeholder="ПР-XX/XX" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -142,7 +141,7 @@
 							проектирования (город)</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="objectCity" placeholder="Минский р-н, н.п.Боровляны" />
+								name="objectCity" placeholder="Минский р-н, н.п.Боровляны" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -150,15 +149,15 @@
 							проектирования (улица,дом)</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control input-sm"
-								name="objectStreet" placeholder="ул. Советская, 11" />
+								name="objectStreet" placeholder="ул. Советская, 11" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Название объекта</label>
 						<div class="col-sm-8">
 							<select class="form-control input-sm" name="typeObject">
-								<option>Устройство 3-фазного ввода жилого дома</option>
-								<option>Устройство 1-фазного ввода жилого дома</option>
+								<option>Устройство 3-фазного ввода в жилой дом:</option>
+								
 							</select>
 						</div>
 					</div>
@@ -174,132 +173,3 @@
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="invoice" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<form:form method="post" action="invoice" modelAttribute="customer"
-				target="_blank" class="form-horizontal">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<span class="fa fa-times"></span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Счет</h4>
-				</div>
-
-				<div class="modal-body">
-
-					<div class="form-group">
-						<label class="col-sm-4 control-label"></label> <label
-							class="col-sm-8"> Услуги проектирования </label>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Полное ФИО</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm" path="name"
-								placeholder="Иванов Иван Иванович" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Краткое ФИО</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="shortName" placeholder="И.И.Иванов" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Населенный пункт
-							(адрес регистрации)</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="city" placeholder="Минский р-н, н.п.Боровляны" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Улица (адрес
-							регистрации)</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="street" placeholder="ул. Ленинская, 18а" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Телефон</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="phone" placeholder="Введите номер телефона" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">E-mail</label>
-						<div class="col-sm-8">
-							<form:input type="email" class="form-control input-sm"
-								path="email" placeholder="Ваш адрес e-mail" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Серия паспорта</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="passportSn" placeholder="МР" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Номер паспорта
-							(возле серии)</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="passportNumber" placeholder="8888888" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Дата выдачи паспорта</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="passportDate" placeholder="25.08.2016" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Кем выдан</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="passportRovd" placeholder="Минским РУВД Минской обл." />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Личный номер</label>
-						<div class="col-sm-8">
-							<form:input type="text" class="form-control input-sm"
-								path="passportPrivateNumber" placeholder="4021565В073РВ2" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Объект
-							проектирования (город)</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control input-sm"
-								placeholder="Минский р-н, н.п.Боровляны" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-4 control-label">Объект
-							проектирования (улица,дом)</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control input-sm"
-								placeholder="ул. Советская, 11" />
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-
-					<button type="reset" class="lineBtn">Очистить</button>
-
-					<form:button type="submit" class="lineBtn">Скачать
-						счет</form:button>
-				</div>
-			</form:form>
-		</div>
-	</div>
-</div>

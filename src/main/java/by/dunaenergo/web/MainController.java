@@ -38,8 +38,9 @@ public class MainController {
 	 */
 
 	@RequestMapping(value = "/dogovor", method = RequestMethod.GET)
-	public ModelAndView dogovorPdf(@RequestParam String name, @RequestParam String shortName, @RequestParam String city, @RequestParam String street, @RequestParam String phone, @RequestParam String email, @RequestParam String passportSn, @RequestParam String passportNumber,
-			@RequestParam String passportDate, @RequestParam String passportRovd, @RequestParam String passportPrivateNumber, @RequestParam String dogovorNumber, @RequestParam String objectCity, @RequestParam String objectStreet, @RequestParam String typeObject) {
+	public ModelAndView dogovorPdf(@RequestParam String name, @RequestParam String shortName, @RequestParam String city, @RequestParam String street, @RequestParam String phone,
+			@RequestParam String email, @RequestParam String passportSn, @RequestParam String passportNumber, @RequestParam String passportDate, @RequestParam String passportRovd,
+			@RequestParam String passportPrivateNumber, @RequestParam String dogovorNumber, @RequestParam String objectCity, @RequestParam String objectStreet, @RequestParam String typeObject) {
 		ModelAndView mav = new ModelAndView();
 		FizCustomer fiz = new FizCustomer();
 		fiz.setName(name);
@@ -62,6 +63,9 @@ public class MainController {
 		fiz.setItem(item);
 		String path = servletContext.getRealPath("/");
 		mav.addObject("customer", fiz);
+		mav.addObject("typeObject", typeObject);
+		mav.addObject("objectCity", objectCity);
+		mav.addObject("objectStreet", objectStreet);
 		mav.addObject("path", path);
 		mav.setViewName("dogovorView");
 		return mav;
