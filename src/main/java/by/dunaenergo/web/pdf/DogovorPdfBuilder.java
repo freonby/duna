@@ -269,7 +269,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		adressDogTitle.setAlignment(titleAlign);
 		doc.add(adressDogTitle);
 		Paragraph footerDogTitle = new Paragraph("ЗАКАЗЧИК:", titleFont);
-		footerDogTitle.setAlignment(titleAlign);
+		footerDogTitle.setAlignment(Element.ALIGN_LEFT);
 		doc.add(footerDogTitle);
 		Paragraph p8_1 = new Paragraph(
 				"Гр. Ананьева Лариса Иосифовна, зарегистрированная по адресу: Минский р-н, н.п. Боровляны, ул. Детская, 1; паспорт: серия МС 2861894, выдан 25.08.2016 Минским РУВД Минской обл.; личный номер: 4020565В063РВ2",
@@ -278,7 +278,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		p8_1.setFirstLineIndent(ind);
 		doc.add(p8_1);
 		Paragraph footerDogTitle1 = new Paragraph("ИСПОЛНИТЕЛЬ:", titleFont);
-		footerDogTitle1.setAlignment(titleAlign);
+		footerDogTitle1.setAlignment(Element.ALIGN_LEFT);
 		doc.add(footerDogTitle1);
 		Paragraph p8_2 = new Paragraph("ООО «ДЮНАэнерго» 220029, г. Минск, пр. Машерова, 17, к.725", textFont);
 		p8_2.setAlignment(txtAlign);
@@ -301,17 +301,20 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		footerTable.setWidthPercentage(100);
 		footerTable.setSpacingAfter(5);
 		footerTable.setSpacingBefore(2);
-		PdfPCell cell3 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, headFont, tableColor);
-		PdfPCell cell4 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, headFont, tableColor);
+		PdfPCell cell3 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
+		PdfPCell cell4 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
 		cell3.setPaddingBottom(20f);
 		cell3.setBorderWidth(4f);
 		cell4.setPaddingBottom(10f);
 		cell4.setBorderWidth(4f);
 		cell3.setPadding(8);
 		cell3.addElement(footerDogTitle);
+		Paragraph p8_12 = new Paragraph("Гр. Ананьева Лариса Иосифовна»", textFont);
 		Paragraph p8_6 = new Paragraph("_____________________  Л.И.Ананьева", textFont);
 		p8_6.setSpacingBefore(40);
 		Paragraph p8_7 = new Paragraph(date, textFont);
+		p8_7.setSpacingBefore(10);
+		cell3.addElement(p8_12);
 		cell3.addElement(p8_6);
 		cell3.addElement(p8_7);
 		cell4.addElement(footerDogTitle1);
@@ -319,6 +322,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		Paragraph p8_9 = new Paragraph("_____________________  А.И.Сульжиц", textFont);
 		p8_9.setSpacingBefore(40);
 		Paragraph p8_10 = new Paragraph(date, textFont);
+		p8_10.setSpacingBefore(10);
 		Paragraph p8_11 = new Paragraph("М.П.", textFont);
 		cell4.addElement(p8_8);
 		cell4.addElement(p8_9);
