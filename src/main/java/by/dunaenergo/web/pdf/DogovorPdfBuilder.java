@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
@@ -16,6 +17,10 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import by.dunaenergo.web.pdf.MoneyToStr.Currency;
+import by.dunaenergo.web.pdf.MoneyToStr.Language;
+import by.dunaenergo.web.pdf.MoneyToStr.Pennies;
 
 public class DogovorPdfBuilder extends AbstractITextPdfView {
 
@@ -31,10 +36,12 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 	protected void buildPdfDocument(Map<String, Object> model, Document doc, PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// get data model which is passed by the Spring container
 		// receive item count
+
 		FizCustomer customer = (FizCustomer) model.get("customer");
 		String objectStreet = (String) model.get("objectStreet");
 		String objectCity = (String) model.get("objectCity");
 		String typeObject = (String) model.get("typeObject");
+		Item item = new Item("Разработка проектной документации по объекту «" + typeObject + " " + customer.getShortName() + ", " + objectCity + ", " + objectStreet + "»", "ед.", 40.41d, 1);
 		String path = (String) model.get("path");
 		Image logo = Image.getInstance(path + "/resources/img/logo/logo.png");
 		logo.setWidthPercentage(30f);
@@ -109,7 +116,9 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		doc.add(stoimostDogTitle);
 
 		Paragraph p2_1 = new Paragraph(
-				"2.1. Стоимость работ по настоящему договору в соответствии с расчетом цены на разработку проектной документации (Приложение 1 к договору) и с Протоколом согласования договорной (контрактной) цены (Приложение 2) составляет 48,49 рублей (сорок восемь рублей сорок девять копеек), в том числе НДС (20%) 8,08 рублей (восемь рублей восемь копеек).",
+				"2.1. Стоимость работ по настоящему договору в соответствии с расчетом цены на разработку проектной документации (Приложение 1 к договору) и с Протоколом согласования договорной (контрактной) цены (Приложение 2) составляет "
+						+ item.formattedDouble(item.summasNds()) + " (" + new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.summasNds()) + "), в том числе НДС (20%) "
+						+ item.formattedDouble(item.nds()) + " (" + new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.nds()) + ").",
 				textFont);
 		p2_1.setAlignment(txtAlign);
 		p2_1.setFirstLineIndent(ind);
@@ -202,8 +211,7 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		doc.add(p4_2a);
 		doc.add(p4_2b);
 		doc.add(p4_3);
-		doc.add(p4_4);
-
+		addNewPage(doc);
 		Paragraph garantDogTitle = new Paragraph("5. Гарантийные обязательства", vendorTitleFont);
 		garantDogTitle.setAlignment(titleAlign);
 		doc.add(garantDogTitle);
@@ -339,8 +347,133 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		footerTable.addCell(cell3);
 		footerTable.addCell(cell4);
 		doc.add(footerTable);
-		doc.newPage();
+		addNewPage(doc);
+		Paragraph pril2Title = new Paragraph("Приложение 2", vendorFont);
+		Paragraph pril2Title1 = new Paragraph("к договору №" + customer.getDogovorNumber(), textFont);
+		Paragraph pril2Title3 = new Paragraph("от " + date, textFont);
+		PdfPTable pril2Table = new PdfPTable(4);
+		pril2Table.setWidthPercentage(100);
+		pril2Table.setSpacingAfter(50);
+		PdfPCell cellp1 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
+		PdfPCell cellp2 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
+		PdfPCell cellp3 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
+		PdfPCell cellp4 = createCell("", 1, 1, PdfPCell.NO_BORDER, Element.ALIGN_LEFT, Element.ALIGN_TOP, headFont, tableColor);
+		cellp4.addElement(pril2Title);
+		cellp4.addElement(pril2Title1);
+		cellp4.addElement(pril2Title3);
+		pril2Table.addCell(cellp1);
+		pril2Table.addCell(cellp2);
+		pril2Table.addCell(cellp3);
+		pril2Table.addCell(cellp4);
+		doc.add(pril2Table);
+		Paragraph protokolDogTitle = new Paragraph("ПРОТОКОЛ", vendorTitleFont);
+		protokolDogTitle.setAlignment(titleAlign);
+		doc.add(protokolDogTitle);
+		Paragraph protokolp1 = new Paragraph("согласования договорной (контрактной) цены", textFont);
+		protokolp1.setAlignment(titleAlign);
+		Paragraph protokolp2 = new Paragraph("к договору № " + customer.getDogovorNumber() + " от " + date, textFont);
+		protokolp2.setAlignment(titleAlign);
+		Paragraph protokolp3 = new Paragraph("Разработка проектной документации по объекту", vendorFont);
+		protokolp3.setAlignment(titleAlign);
+		Paragraph protokolp4 = new Paragraph("«" + typeObject + " " + customer.getShortName() + ", " + objectCity + ", " + objectStreet + "»", vendorFont);
+		protokolp4.setAlignment(titleAlign);
+		protokolp4.setSpacingAfter(20);
+		doc.add(protokolp1);
+		doc.add(protokolp2);
+		doc.add(protokolp3);
+		doc.add(protokolp4);
+		Paragraph protokolText1 = new Paragraph("Мы, нижеподписавшиеся, от лица Заказчика – Гр." + customer.getName() + ", зарегистрированный(ая) по адресу: " + customer.getCity() + ", "
+				+ customer.getStreet() + "; паспорт: " + customer.getPassportSn() + " " + customer.getPassportNumber() + ", выдан " + customer.getPassportDate() + " " + customer.getPassportRovd()
+				+ "; личный номер: " + customer.getPassportPrivateNumber()
+				+ ", и от лица Исполнителя – Общества с ограниченной ответственностью «ДЮНАэнерго» - директор Сульжиц Андрей Иванович удостоверяем, что сторонами достигнуто соглашение о величине договорной (контрактной) цены на выполнение работ по договору № "
+				+ customer.getDogovorNumber() + " от " + date + " в сумме " + item.formattedDouble(item.summasNds()) + " ("
+				+ new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.summasNds()) + "), в том числе НДС (20%) " + item.formattedDouble(item.nds()) + " ("
+				+ new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.nds()) + ").", textFont);
 
+		protokolText1.setAlignment(txtAlign);
+		protokolText1.setFirstLineIndent(ind);
+		Paragraph protokolText2 = new Paragraph("Настоящий протокол является основанием для проведения взаимных расчетов и платежей между Заказчиком и Исполнителем.", textFont);
+		protokolText2.setAlignment(txtAlign);
+		protokolText2.setFirstLineIndent(ind);
+		doc.add(protokolText1);
+		doc.add(protokolText2);
+		doc.add(footerTable);
+
+		// set invoice table
+		PdfPTable invoiceTable = new PdfPTable(9);
+		invoiceTable.setWidthPercentage(100);
+		float[] columnWidths = { 10, 50, 10, 10, 15, 20, 10, 15, 20 };
+		invoiceTable.setWidths(columnWidths);
+		invoiceTable.setSpacingBefore(20);
+		invoiceTable.setSpacingAfter(20);
+		addNewPage(doc);
+		PdfPTable headerInvoice = new PdfPTable(1);
+		headerInvoice.setWidthPercentage(100);
+		headerInvoice.setSpacingAfter(20);
+		headerInvoice.setSpacingBefore(5);
+		// String headText = "Внимание!Товар отпускается по факту прихода денег
+		// на р/c Поставщика, при наличии доверенности и паспорта. В
+		// доверенности должны быть указаны УНП и ОКПО Плательщика.";
+		// Paragraph head = new Paragraph(headText, headFont);
+		Paragraph vendorTitle = new Paragraph("ПОЛУЧАТЕЛЬ:\n", vendorTitleFont);
+		vendorTitle.setSpacingBefore(20);
+		Paragraph vName = new Paragraph("ООО «ДЮНАэнерго»", vendorTitleFont);
+		Paragraph vAddress = new Paragraph("Адрес: " + "220029, г. Минск, пр. Машерова, 17, к.725", vendorFont);
+		Paragraph vPhone = new Paragraph("Тел.: " + "+375 (17) 286 34 08", vendorFont);
+		Paragraph vUnp = new Paragraph("УНП 192485462 ОКПО 382368345000", vendorFont);
+		Paragraph vBank = new Paragraph("Банк: " + "ЦБУ 111 ОАО «Приорбанк»" + " " + "Адрес банка: 220123, г. Минск, пр. Машерова, 40", vendorFont);
+		Paragraph vBankAccount = new Paragraph("Р/c: " + "3012037816018", vendorFont);
+		Paragraph vBankCode = new Paragraph("Код банка: " + "153001749", vendorFont);
+		PdfPCell cellTitle = new PdfPCell(new Phrase("ООО «ДЮНАэнерго»", vendorFont));
+
+		cellTitle.setPadding(8);
+		cellTitle.addElement(vName);
+		cellTitle.addElement(vAddress);
+		cellTitle.addElement(vPhone);
+		cellTitle.addElement(vUnp);
+		cellTitle.addElement(vBank);
+		cellTitle.addElement(vBankAccount);
+		cellTitle.addElement(vBankCode);
+		headerInvoice.addCell(cellTitle);
+		// doc.add(head);
+		doc.add(vendorTitle);
+		doc.add(headerInvoice);
+
+		// set title invoice and number
+		Paragraph titleInv = new Paragraph("СЧЕТ-ФАКТУРА №" + customer.getDogovorNumber() + " от " + date, titleFont);
+		titleInv.setAlignment(Element.ALIGN_CENTER);
+		titleInv.setSpacingAfter(5);
+		doc.add(titleInv);
+		doc.add(protokolp2);
+
+		addCustomer(doc, customer, headFont);
+		// invoice table head
+		addHeadTable(invoiceTable, Element.ALIGN_CENTER, Element.ALIGN_CENTER, tableColor);
+
+		// add item to invoice table
+		addItem(invoiceTable, item, Element.ALIGN_RIGHT, Element.ALIGN_RIGHT, tableColor);
+		// add table footer
+		addFooterTable(invoiceTable, item.formattedDouble(item.summa()), item.formattedDouble(item.nds()), item.formattedDouble(item.summasNds()), Element.ALIGN_RIGHT, Element.ALIGN_RIGHT,
+				tableColor);
+		doc.add(invoiceTable);
+
+		Paragraph nm = new Paragraph("Наименований:" + "1", headFont);
+		nm.setSpacingBefore(10);
+		doc.add(nm);
+		Paragraph vsego = new Paragraph("Всего: " + new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.summasNds()), headFont);
+		Paragraph nds = new Paragraph("В том числе НДС: " + new MoneyToStr(Currency.RUR, Language.RUS, Pennies.TEXT).convert(item.nds()), headFont);
+		vsego.setSpacingBefore(10);
+		nds.setSpacingBefore(5);
+		doc.add(vsego);
+		doc.add(nds);
+
+		Paragraph podp = new Paragraph("Счет выдал   _________________________   Директор ООО «ДЮНАэнерго» А.И.Сульжиц", vendorFont);
+		podp.setSpacingBefore(30);
+		doc.add(podp);
+		Paragraph mp = new Paragraph("м.п.", vendorFont);
+		mp.setSpacingBefore(20);
+		mp.setIndentationLeft(20);
+		doc.add(mp);
 	}
 
 	public PdfPCell createCell(String content, int colspan, int rowspan, int border, int hAlignment, int vAlignment, Font font, BaseColor color) {
@@ -353,6 +486,76 @@ public class DogovorPdfBuilder extends AbstractITextPdfView {
 		cell.setVerticalAlignment(vAlignment);
 		cell.setBorderColor(color);
 		return cell;
+	}
+
+	public PdfPTable addItem(PdfPTable invoiceTable, Item item, int hAlignment, int vAlignment, BaseColor color) {
+		invoiceTable.addCell(createCell("1", 1, 1, PdfPCell.BOX, Element.ALIGN_CENTER, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.getItemName(), 1, 1, PdfPCell.BOX, Element.ALIGN_LEFT, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.getIzm(), 1, 1, PdfPCell.BOX, Element.ALIGN_CENTER, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(Long.toString(item.getItemCount()), 1, 1, PdfPCell.BOX, Element.ALIGN_CENTER, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.formattedDouble(item.getPriceDouble()), 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.formattedDouble(item.summa()), 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("20", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.formattedDouble(item.nds()), 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell(item.formattedDouble(item.summasNds()), 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		return invoiceTable;
+	}
+
+	public PdfPTable addFooterTable(PdfPTable invoiceTable, String summa, String nds, String summasNds, int hAlignment, int vAlignment, BaseColor color) {
+		invoiceTable.addCell(createCell("Итого", 5, 1, PdfPCell.NO_BORDER, Element.ALIGN_CENTER, vAlignment, vendorFont, color));
+		invoiceTable.addCell(createCell(summa, 1, 1, PdfPCell.BOX, hAlignment, vAlignment, vendorFont, color));
+		invoiceTable.addCell(createCell(nds, 2, 1, PdfPCell.BOX, hAlignment, vAlignment, vendorFont, color));
+		invoiceTable.addCell(createCell(summasNds, 1, 1, PdfPCell.BOX, hAlignment, vAlignment, vendorFont, color));
+		return invoiceTable;
+	}
+
+	public PdfPTable addHeadTable(PdfPTable invoiceTable, int hAlignment, int vAlignment, BaseColor color) {
+		invoiceTable.addCell(createCell("№", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Наименование товара(услуги,работы)", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Ед.изм.", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Кол-во", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Цена", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Сумма", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Ставка НДС %", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("НДС", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		invoiceTable.addCell(createCell("Сумма с НДС", 1, 1, PdfPCell.BOX, hAlignment, vAlignment, headFont, color));
+		return invoiceTable;
+	}
+
+	public void addNewPage(Document doc) {
+		Paragraph emptySpace = new Paragraph(" ", textFont);
+		while (!doc.newPage()) {
+			try {
+				doc.add(emptySpace);
+			} catch (DocumentException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public Document addCustomer(Document doc, FizCustomer customer, Font font) {
+
+		Paragraph customerTitle = new Paragraph("ПЛАТЕЛЬЩИК: " + customer.getName() + "\n", vendorTitleFont);
+		Paragraph cAddress = new Paragraph("Адрес регистрации: " + customer.getCity() + ", " + customer.getStreet(), font);
+		Paragraph cPassport = new Paragraph("Паспорт: " + customer.getPassportSn() + " " + customer.getPassportNumber(), font);
+		Paragraph cVyd = new Paragraph("Выдан: " + customer.getPassportDate() + " " + customer.getPassportRovd(), font);
+		Paragraph cPrivateNumb = new Paragraph("Личный номер: " + customer.getPassportPrivateNumber(), font);
+
+		try {
+			doc.add(customerTitle);
+			doc.add(cAddress);
+			doc.add(cPassport);
+			doc.add(cVyd);
+			doc.add(cPrivateNumb);
+
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		return doc;
 	}
 
 }

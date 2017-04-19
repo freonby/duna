@@ -7,8 +7,19 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 		<put-attribute name="body" value="" />
 	</definition>
-	<definition name="index" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/pages/index.jsp" />
+	<definition name="office" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/office.jsp" />
 	</definition>
-
+	<definition name="mainPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/mainPage.jsp" />
+	</definition>
+	<definition name="ascue" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/ascue.jsp" />
+	</definition>
+	<definition name="contact" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/contact.jsp" />
+	</definition>
+	<definition name="services" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/services.jsp" />
+	</definition>
 </tiles-definitions>

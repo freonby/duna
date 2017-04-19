@@ -6,7 +6,6 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,13 +22,69 @@ public class MainController {
 	@Autowired
 	private ServletContext servletContext;
 
+	@RequestMapping(value = "office", method = RequestMethod.GET)
+	public ModelAndView viewOffice() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("office");
+		mav.addObject("customer", new FizCustomer());
+		mav.addObject("mainStyle", "");
+		mav.addObject("servStyle", "");
+		mav.addObject("ascueStyle", "");
+		mav.addObject("officeStyle", "active");
+		mav.addObject("contactStyle", "");
+		mav.addObject("homeClass", "");
+		return mav;
+	}
+
 	@RequestMapping(value = { "/", "mainPage" }, method = RequestMethod.GET)
 	public ModelAndView viewMainPage() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
-		mav.addObject("customer", new FizCustomer());
+		mav.setViewName("mainPage");
 		mav.addObject("mainStyle", "active");
+		mav.addObject("servStyle", "");
+		mav.addObject("ascueStyle", "");
+		mav.addObject("tarifStyle", "");
 		mav.addObject("contactStyle", "");
+		mav.addObject("homeClass", "home-page");
+		return mav;
+	}
+
+	@RequestMapping(value = "ascue", method = RequestMethod.GET)
+	public ModelAndView viewAscuePage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ascue");
+		mav.addObject("mainStyle", "");
+		mav.addObject("servStyle", "");
+		mav.addObject("ascueStyle", "active");
+		mav.addObject("tarifStyle", "");
+		mav.addObject("contactStyle", "");
+		mav.addObject("homeClass", "");
+		return mav;
+	}
+
+	@RequestMapping(value = "contact", method = RequestMethod.GET)
+	public ModelAndView viewContactPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("contact");
+		mav.addObject("mainStyle", "");
+		mav.addObject("servStyle", "");
+		mav.addObject("ascueStyle", "");
+		mav.addObject("officeStyle", "");
+		mav.addObject("contactStyle", "active");
+		mav.addObject("homeClass", "");
+		return mav;
+	}
+
+	@RequestMapping(value = "services", method = RequestMethod.GET)
+	public ModelAndView viewServicesPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("services");
+		mav.addObject("mainStyle", "");
+		mav.addObject("servStyle", "active");
+		mav.addObject("ascueStyle", "");
+		mav.addObject("officeStyle", "");
+		mav.addObject("contactStyle", "");
+		mav.addObject("homeClass", "");
 		return mav;
 	}
 
@@ -68,17 +123,6 @@ public class MainController {
 		mav.addObject("objectStreet", objectStreet);
 		mav.addObject("path", path);
 		mav.setViewName("dogovorView");
-		return mav;
-
-	}
-
-	@RequestMapping(value = "/invoice", method = RequestMethod.POST)
-	public ModelAndView invoicePdf(@ModelAttribute("customer") FizCustomer customer) {
-		ModelAndView mav = new ModelAndView();
-		String path = servletContext.getRealPath("/");
-		mav.addObject("customer", customer);
-		mav.addObject("path", path);
-		mav.setViewName("invoiceView");
 		return mav;
 
 	}

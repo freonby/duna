@@ -13,7 +13,8 @@
 
 <!-- css -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
-<link href="resources/css/font-awesome.min.css" rel="stylesheet" />
+<link href="resources/css/fancybox/jquery.fancybox.css" rel="stylesheet">
+<link href="resources/css/flexslider.css" rel="stylesheet" />
 <link href="resources/css/style.css" rel="stylesheet" />
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

@@ -15,14 +15,14 @@
             <i class="fa fa-envelope"></i> na_an@tut.by </p>
         </div>
         <div>
-       
+       <c:import url="metrica.jsp"></c:import>
         </div>
       </div>
       <div class="col-lg-3">
         <div class="widget">
           <h5 class="widgetheading">Быстрые ссылки</h5>
           <ul class="link-list">
-            <li><i class="fa fa-external-link-square" aria-hidden="true"></i> <a href="askue.html">АСКУЭ</a></li>
+            <li><i class="fa fa-external-link-square" aria-hidden="true"></i> <a href="ascue">АСКУЭ</a></li>
             <li><i class="fa fa-external-link-square" aria-hidden="true"></i> <a href="#">Счетчики АИСТ</a></li>
             <li><i class="fa fa-external-link-square" aria-hidden="true"></i> <a href="#">Энергоэффективность</a></li>
             <li><i class="fa fa-external-link-square" aria-hidden="true"></i> <a href="#">ТНПА</a></li>
@@ -81,10 +81,27 @@
 <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a> 
 <!-- javascript
     ================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
 <script src="resources/js/jquery.js"></script> 
-
+<script src="resources/js/jquery.easing.1.3.js"></script> 
 <script src="resources/js/bootstrap.min.js"></script> 
+<script src="resources/js/jquery.fancybox.pack.js"></script> 
+<script src="resources/js/jquery.fancybox-media.js"></script> 
+<script src="resources/js/jquery.flexslider.js"></script> 
+<script src="resources/js/animate.js"></script> 
+<!-- Vendor Scripts --> 
+<script src="resources/js/modernizr.custom.js"></script> 
+<script src="resources/js/jquery.isotope.min.js"></script> 
+<script src="resources/js/jquery.magnific-popup.min.js"></script> 
+<script src="resources/js/custom.js"></script> 
 
 
+< 
+<script>
+$(document).ready(function() {
+  //carousel options
+  $('#quote-carousel').carousel({
+    pause: true, interval: 10000,
+  });
+});
+</script>
 </body></html>
