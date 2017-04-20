@@ -94,8 +94,6 @@
 <script src="resources/js/jquery.magnific-popup.min.js"></script> 
 <script src="resources/js/custom.js"></script> 
 
-
-< 
 <script>
 $(document).ready(function() {
   //carousel options

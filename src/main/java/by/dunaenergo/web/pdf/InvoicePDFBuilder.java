@@ -113,6 +113,7 @@ public class InvoicePDFBuilder extends AbstractITextPdfView {
 		invoiceTable.setWidths(columnWidths);
 		invoiceTable.setSpacingBefore(20);
 		invoiceTable.setSpacingAfter(20);
+
 		// invoice table head
 		addHeadTable(invoiceTable, Element.ALIGN_CENTER, Element.ALIGN_CENTER);
 
